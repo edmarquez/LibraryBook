@@ -106,12 +106,116 @@ public class LibrosCRUD {
         
         return libros;
     }
+    
     public ArrayList<Libros> getById(Libros l){
         PreparedStatement ps;
         ArrayList<Libros> libros = new ArrayList<>();
         try {
             ps = mycon.prepareStatement("SELECT * FROM Libros WHERE codigo=?");
             ps.setString(1, l.getCodigolibro());
+            ResultSet rs = ps.executeQuery();
+            if(rs!=null){
+                try {
+                    while(rs.next()){
+                        libros.add(
+                            new Libros(
+                                rs.getString("codigo"), 
+                                rs.getString("nombre"),
+                                rs.getString("titulo"),
+                                rs.getString("autor"),
+                                rs.getInt("cantidad")
+                            )
+                        );
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Libros.class.getName()).
+                            log(Level.SEVERE, null, ex);
+                }
+            }else{
+                System.out.println("Total de registros encontrados es: 0");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LibrosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return libros;
+    }
+    
+    public ArrayList<Libros> getByNombre(Libros l){
+        PreparedStatement ps;
+        ArrayList<Libros> libros = new ArrayList<>();
+        try {
+            ps = mycon.prepareStatement("SELECT * FROM Libros WHERE nombre LIKE ?");
+            ps.setString(1, "%"+l.getNombrelibro()+"%");
+            ResultSet rs = ps.executeQuery();
+            if(rs!=null){
+                try {
+                    while(rs.next()){
+                        libros.add(
+                            new Libros(
+                                rs.getString("codigo"), 
+                                rs.getString("nombre"),
+                                rs.getString("titulo"),
+                                rs.getString("autor"),
+                                rs.getInt("cantidad")
+                            )
+                        );
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Libros.class.getName()).
+                            log(Level.SEVERE, null, ex);
+                }
+            }else{
+                System.out.println("Total de registros encontrados es: 0");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LibrosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return libros;
+    }
+    
+    
+    public ArrayList<Libros> getByTitulo(Libros l){
+        PreparedStatement ps;
+        ArrayList<Libros> libros = new ArrayList<>();
+        try {
+            ps = mycon.prepareStatement("SELECT * FROM Libros WHERE titulo LIKE ?");
+            ps.setString(1, "%"+l.getTitulolibro()+"%");
+            ResultSet rs = ps.executeQuery();
+            if(rs!=null){
+                try {
+                    while(rs.next()){
+                        libros.add(
+                            new Libros(
+                                rs.getString("codigo"), 
+                                rs.getString("nombre"),
+                                rs.getString("titulo"),
+                                rs.getString("autor"),
+                                rs.getInt("cantidad")
+                            )
+                        );
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Libros.class.getName()).
+                            log(Level.SEVERE, null, ex);
+                }
+            }else{
+                System.out.println("Total de registros encontrados es: 0");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LibrosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return libros;
+    }
+    
+    public ArrayList<Libros> getByAutor(Libros l){
+        PreparedStatement ps;
+        ArrayList<Libros> libros = new ArrayList<>();
+        try {
+            ps = mycon.prepareStatement("SELECT * FROM Libros WHERE autor LIKE ?");
+            ps.setString(1, "%"+l.getAutorlibro()+"%");
             ResultSet rs = ps.executeQuery();
             if(rs!=null){
                 try {

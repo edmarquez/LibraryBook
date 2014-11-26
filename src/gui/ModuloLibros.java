@@ -12,6 +12,7 @@ import libreria.Libros;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import java.awt.event.KeyEvent;
 /**
  *
  * @author allexiusw
@@ -28,6 +29,8 @@ public class ModuloLibros extends javax.swing.JDialog {
         LibrosCRUD l = new LibrosCRUD(MyConnection.getConnection());
         ArrayList<Libros> listado = l.getAll();
         volcarDatos(listado);
+        this.getRootPane().setDefaultButton(btnBuscar);
+        btnBuscar.setVisible(false);
     }
 
     public void crearModelo(){
@@ -73,9 +76,13 @@ public class ModuloLibros extends javax.swing.JDialog {
         btnEliminar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtBuscar = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
         jLabel1.setText("Administración de Libros");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -119,6 +126,10 @@ public class ModuloLibros extends javax.swing.JDialog {
             }
         });
 
+        jLabel2.setText("Buscar:");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Codigo", "Nombre", "Titulo", "Autor" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,9 +138,15 @@ public class ModuloLibros extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(86, 86, 86)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)))
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(232, 232, 232)
                         .addComponent(btnNuevo)
@@ -146,7 +163,12 @@ public class ModuloLibros extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(4, 4, 4)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -154,7 +176,7 @@ public class ModuloLibros extends javax.swing.JDialog {
                     .addComponent(btnModificar)
                     .addComponent(btnEliminar)
                     .addComponent(btnBuscar))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
@@ -207,12 +229,39 @@ public class ModuloLibros extends javax.swing.JDialog {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        String codigo = JOptionPane.showInputDialog(this, "Escriba el codigo del Libro");
-        Libros l = new Libros(codigo, null, null, null, 0);
+        String text = txtBuscar.getText().toString();
         LibrosCRUD libro =  new LibrosCRUD(MyConnection.getConnection());
-        ArrayList<Libros> listado = libro.getById(l);
+        ArrayList<Libros> listado = new ArrayList<>();
+        Libros l = null;
+        if(text.isEmpty()){
+            listado = libro.getAll();
+        }else{
+            String option = jComboBox1.getSelectedItem().toString();
+            switch(option){
+                case "Codigo":
+                    l = new Libros(text, null, null, null, 0);
+                    listado = libro.getById(l);
+                    break;
+                    
+                case "Nombre":
+                    l = new Libros(null, text, null, null, 0);
+                    listado = libro.getByNombre(l);
+                    break;
+                
+                case "Titulo":
+                    l = new Libros(null, null, text, null, 0);
+                    listado = libro.getByTitulo(l);
+                    break;
+                
+                case "Autor":
+                    l = new Libros(null, null, null, text, 0);
+                    listado = libro.getByAutor(l);
+                    break;
+                    
+            }
+        }
         if(listado.isEmpty()){
-            JOptionPane.showMessageDialog(this, "No se encontro el Libro");
+            JOptionPane.showMessageDialog(this, "No se encontraron coincidencias");
         }else{
             volcarDatos(listado);
         }
@@ -258,8 +307,11 @@ public class ModuloLibros extends javax.swing.JDialog {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
