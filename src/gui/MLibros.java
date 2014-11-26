@@ -15,21 +15,20 @@ import javax.swing.*;
  * @author allexiusw
  */
 public class MLibros extends javax.swing.JDialog {
-
-    public Libros l=null;
     /**
      * Creates new form MLibros
      */
-    public MLibros() {
+    public MLibros(Libros l) {
         setModal(true);
         initComponents();
-        if(!(this.l == null)){
+        if(!(l == null)){
             edtCodigo.setEnabled(false);
             edtCodigo.setText(l.getCodigolibro());
             edtNombre.setText(l.getNombrelibro());
             edtTitulo.setText(l.getTitulolibro());
             edtAutor.setText(l.getAutorlibro());
             edtCantidad.setText(String.valueOf(l.getCantidad()));
+            btnSwitch.setText("Actualizar");
         }
     }
 
@@ -51,7 +50,7 @@ public class MLibros extends javax.swing.JDialog {
         edtTitulo = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         edtAutor = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnSwitch = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         edtCantidad = new javax.swing.JTextField();
@@ -68,10 +67,10 @@ public class MLibros extends javax.swing.JDialog {
 
         jLabel7.setText("Autor");
 
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSwitch.setText("Guardar");
+        btnSwitch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSwitchActionPerformed(evt);
             }
         });
 
@@ -93,7 +92,7 @@ public class MLibros extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(btnSwitch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
                         .addGap(259, 259, 259))
@@ -138,7 +137,7 @@ public class MLibros extends javax.swing.JDialog {
                     .addComponent(edtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnSwitch)
                     .addComponent(jButton2))
                 .addGap(37, 37, 37))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,25 +162,43 @@ public class MLibros extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Libros l = new Libros(
-            edtCodigo.getText().toString(),
-            edtNombre.getText().toString(),
-            edtTitulo.getText().toString(),
-            edtAutor.getText().toString(),
-            Integer.parseInt(edtCantidad.getText().toString())
-        );
+    private void btnSwitchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSwitchActionPerformed
         LibrosCRUD newl = new LibrosCRUD(MyConnection.getConnection());
-        if(newl.add(l)){
-            JOptionPane.showMessageDialog(
-                this,
-                "Registro Guardado Con exito!!!",
-                "Notificación",
-                JOptionPane.INFORMATION_MESSAGE
+        if(btnSwitch.getText().equals("Actualizar")){
+            Libros l = new Libros(
+                edtCodigo.getText().toString(),
+                edtNombre.getText().toString(),
+                edtTitulo.getText().toString(),
+                edtAutor.getText().toString(),
+                Integer.parseInt(edtCantidad.getText().toString())
             );
-            clearForm();
+            if(newl.update(l)){
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Registro Guardado Con exito!!!",
+                    "Notificación",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        }else{
+            Libros l = new Libros(
+                edtCodigo.getText().toString(),
+                edtNombre.getText().toString(),
+                edtTitulo.getText().toString(),
+                edtAutor.getText().toString(),
+                Integer.parseInt(edtCantidad.getText().toString())
+            );
+            if(newl.add(l)){
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Registro Guardado Con exito!!!",
+                    "Notificación",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+                clearForm();
+            }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnSwitchActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         dispose();
@@ -224,18 +241,18 @@ public class MLibros extends javax.swing.JDialog {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MLibros().setVisible(true);
+                new MLibros(null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSwitch;
     private javax.swing.JTextField edtAutor;
     private javax.swing.JTextField edtCantidad;
     private javax.swing.JTextField edtCodigo;
     private javax.swing.JTextField edtNombre;
     private javax.swing.JTextField edtTitulo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

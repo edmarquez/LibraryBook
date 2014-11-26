@@ -59,7 +59,7 @@ public class LibrosCRUD {
         try {
             ps = mycon.prepareStatement(
                 "UPDATE Libros "+ 
-                "SET nombre=?, titulo=?, autor=?, cantidad=?"+ 
+                "SET nombre=?, titulo=?, autor=?, cantidad=? "+ 
                 "WHERE codigo=?"
             );
             ps.setString(1, l.getNombrelibro());

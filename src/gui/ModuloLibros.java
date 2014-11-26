@@ -188,10 +188,8 @@ public class ModuloLibros extends javax.swing.JDialog {
         Libros li = (Libros) jTable1.getModel().getValueAt(
             jTable1.getSelectedRow(), 5
         );
-        JOptionPane.showMessageDialog(this, li.getNombrelibro());
-        MLibros ml = new MLibros();
+        MLibros ml = new MLibros(li);
         ml.setLocationRelativeTo(this);
-        ml.l = li;
         ml.setVisible(true);
         LibrosCRUD lb = new LibrosCRUD(MyConnection.getConnection());
         ArrayList libros = lb.getAll();
@@ -199,7 +197,7 @@ public class ModuloLibros extends javax.swing.JDialog {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        MLibros nl = new MLibros();
+        MLibros nl = new MLibros(null);
         nl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nl.setLocationRelativeTo(this);
         nl.setVisible(true);
