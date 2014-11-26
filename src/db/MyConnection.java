@@ -33,9 +33,9 @@ public class MyConnection {
         
         try {
             this.con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/Biblioteca",
-                    "root",
-                    ""
+                    "jdbc:mysql://192.168.56.21:3306/Biblioteca",
+                    "testing",
+                    "021$"
             );
         } catch (SQLException ex) {
             Logger.getLogger(MyConnection.class.getName()).

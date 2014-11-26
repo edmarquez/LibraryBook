@@ -22,6 +22,7 @@ public class Loggin extends javax.swing.JFrame {
      */
     public Loggin() {
         initComponents();
+        getRootPane().setDefaultButton(jbAcceder);
     }
 
     /**
