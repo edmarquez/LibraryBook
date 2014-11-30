@@ -8,7 +8,7 @@ package gui;
 import crud.AdministradorCRUD;
 import db.MyConnection;
 import javax.swing.JOptionPane;
-import libreria.Administrador;
+import entity.Administrador;
 import javax.swing.JFrame;
 
 /**

@@ -8,7 +8,7 @@ import crud.UsuariosCRUD;
 import db.MyConnection;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import libreria.Usuarios;
+import entity.Usuarios;
 import java.util.ArrayList;
 /**
  *

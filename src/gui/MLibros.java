@@ -7,7 +7,7 @@ package gui;
 
 import crud.LibrosCRUD;
 import db.MyConnection;
-import libreria.Libros;
+import entity.Libros;
 import javax.swing.*;
 
 /**
@@ -30,6 +30,7 @@ public class MLibros extends javax.swing.JDialog {
             edtCantidad.setText(String.valueOf(l.getCantidad()));
             btnSwitch.setText("Actualizar");
         }
+        this.getRootPane().setDefaultButton(btnSwitch);
     }
 
     /**

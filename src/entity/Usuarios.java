@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package libreria;
+package entity;
 import java.io.Serializable;
+import libreria.Personas;
 
 public class Usuarios extends Personas implements Serializable {
 

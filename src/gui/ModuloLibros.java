@@ -8,7 +8,7 @@ import crud.LibrosCRUD;
 import db.MyConnection;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import libreria.Libros;
+import entity.Libros;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

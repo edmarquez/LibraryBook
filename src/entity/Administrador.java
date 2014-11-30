@@ -1,6 +1,7 @@
-package libreria;
+package entity;
 
 import java.io.Serializable;
+import libreria.Personas;
 
 public class Administrador extends Personas implements Serializable {
 
