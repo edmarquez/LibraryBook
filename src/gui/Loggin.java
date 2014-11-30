@@ -113,7 +113,7 @@ public class Loggin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbAccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAccederActionPerformed
-        Administrador admin = new Administrador(jtUser.getText().toString(), null, jtPass.getText().toString());
+        Administrador admin = new Administrador(jtUser.getText().toString(), jtPass.getText().toString(), null);
         AdministradorCRUD a = new AdministradorCRUD(MyConnection.getConnection());
         if(a.checkAccess(admin)){
             MenuPrincipalAdministrador mad = new MenuPrincipalAdministrador();

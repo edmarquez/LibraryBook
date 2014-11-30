@@ -9,7 +9,7 @@ public class Administrador extends Personas implements Serializable {
     public Administrador() {
     }
 
-    public Administrador(String nombre, String DNI, String password) {
+    public Administrador(String nombre, String password, String DNI) {
         super(nombre, DNI);
         this.password = password;
 
