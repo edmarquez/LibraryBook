@@ -82,6 +82,11 @@ public class MenuPrincipalAdministrador extends javax.swing.JFrame {
         jMenu2.add(jMenuItem9);
 
         jMenuItem10.setText("Usuarios");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem10);
 
         jMenuItem11.setText("Administradores");
@@ -140,6 +145,13 @@ public class MenuPrincipalAdministrador extends javax.swing.JFrame {
         m.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         m.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        ModuloUsuarios mu = new ModuloUsuarios();
+        mu.setLocationRelativeTo(this);
+        mu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        mu.setVisible(true);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     /**
      * @param args the command line arguments
