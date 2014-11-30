@@ -5,7 +5,6 @@
  */
 package entity;
 import java.io.Serializable;
-import libreria.Personas;
 
 public class Usuarios extends Personas implements Serializable {
 

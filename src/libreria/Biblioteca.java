@@ -1,10 +1,6 @@
 package libreria;
-import crud.AdministradorCRUD;
-import db.MyConnection;
 import gui.PantallaPrincipal;
 import javax.swing.JFrame;
-import java.sql.Connection;
-import javax.swing.JOptionPane;
 /**
  *
  * @author allexiusw

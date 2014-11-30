@@ -26,7 +26,7 @@ public class UsuariosCRUD {
     }
     
     public ArrayList<Usuarios> isValid(Usuarios user){
-        ArrayList<Usuarios> usuarios = null;
+        ArrayList<Usuarios> usuarios = new ArrayList<>();
         try {
             PreparedStatement ps =
                     this.mycon.prepareStatement("SELECT * FROM Usuarios WHERE codigo=?");
