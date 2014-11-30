@@ -6,7 +6,6 @@
 package gui;
 import crud.UsuariosCRUD;
 import db.MyConnection;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import entity.Usuarios;
 import java.util.ArrayList;
@@ -60,11 +59,17 @@ public class MenuPrincipalViews extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("cerrar");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Prestamos");
+        jMenu2.setEnabled(false);
 
         jMenuItem6.setText("Nuevo");
         jMenu2.add(jMenuItem6);
@@ -109,8 +114,18 @@ public class MenuPrincipalViews extends javax.swing.JFrame {
         }else{
             this.user = users.get(0);
             jlUser.setText("Usuario: "+this.user.getNombre());
+            this.user = users.get(0);
+            this.jMenu2.setEnabled(true);
+            this.jMenuItem1.setEnabled(false);
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        this.jMenu2.setEnabled(false);
+        this.jMenuItem1.setEnabled(true);
+        this.jlUser.setText("Usuario: No identificado");
+        
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
