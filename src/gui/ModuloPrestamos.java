@@ -12,7 +12,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import entity.Usuarios;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 /**
  *
@@ -33,7 +32,7 @@ public class ModuloPrestamos extends javax.swing.JDialog {
         this.getRootPane().setDefaultButton(btnBuscar);
         btnBuscar.setVisible(false);
     }
-
+    //@method crearModelo permite crear la estructura de la tabla
     public void crearModelo(){
         jTable1 = new JTable();
         jTable1.setModel(
@@ -73,7 +72,6 @@ public class ModuloPrestamos extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnBuscar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
         btnDevolver = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
@@ -101,13 +99,6 @@ public class ModuloPrestamos extends javax.swing.JDialog {
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
-            }
-        });
-
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -142,9 +133,7 @@ public class ModuloPrestamos extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(293, 293, 293)
                         .addComponent(btnDevolver)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBuscar)))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
@@ -163,37 +152,12 @@ public class ModuloPrestamos extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDevolver)
-                    .addComponent(btnEliminar)
                     .addComponent(btnBuscar))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int res = JOptionPane.showConfirmDialog(
-            this,
-            "Seguro que deseas eliminar el personal",
-            "Advertencia",
-            JOptionPane.YES_NO_OPTION
-        );
-        if(res==JOptionPane.YES_OPTION){
-            /*try{
-                Prestamos p = (Prestamos) jTable1.getModel().getValueAt(
-                    jTable1.getSelectedRow(),
-                    4
-                );
-                PrestamosCRUD pcrud = new PrestamosCRUD(MyConnection.getConnection());
-                pcrud.delete(p);
-                ArrayList<Prestamos> rows = pcrud.getPendientes();
-                volcarDatos(rows);
-                
-            }catch(Exception e){
-                System.out.print("Selecciona el elemento a elimnar");
-            }*/
-        }
-    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
         Usuarios us = (Usuarios) jTable1.getModel().getValueAt(
@@ -209,35 +173,35 @@ public class ModuloPrestamos extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String text = txtBuscar.getText().toString();
-        UsuariosCRUD udao =  new UsuariosCRUD(MyConnection.getConnection());
-        ArrayList<Usuarios> listado = new ArrayList<>();
-        Usuarios u = null;
+        PrestamosCRUD pdao =  new PrestamosCRUD(MyConnection.getConnection());
+        ArrayList<Prestamos> rows = new ArrayList<>();
+        Prestamos p;
         if(text.isEmpty()){
-            listado = udao.getAll();
+            rows = pdao.getPendientes();
         }else{
             String option = jComboBox1.getSelectedItem().toString();
             switch(option){
-                case "Codigo":
-                    u = new Usuarios(text, null, null);
-                    listado = udao.getById(u);
+                case "Fecha":
+                    JOptionPane.showMessageDialog(this, "Opcion no disponible en este momento");
                     break;
                     
-                case "Nombre":
-                    u = new Usuarios(null, text, null);
+                /*case "Codigo de Libro":
+                    String texto = JOptionPane.showInputDialog(this, "Ingrese el codigo de libro para general la consulta");
+                    p = new Prestamos();
                     listado = udao.getByNombre(u);
                     break;
                 
                 case "DNI":
                     u = new Usuarios(null, null, text);
                     listado = udao.getByDNI(u);
-                    break;
+                    break;*/
             }
         }
-        if(listado.isEmpty()){
+        /*if(listado.isEmpty()){
             JOptionPane.showMessageDialog(this, "No se encontraron coincidencias");
         }else{
             //volcarDatos(listado);
-        }
+        }*/
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
@@ -281,7 +245,6 @@ public class ModuloPrestamos extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnDevolver;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
