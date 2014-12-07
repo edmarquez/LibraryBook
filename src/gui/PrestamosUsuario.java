@@ -28,9 +28,6 @@ public class PrestamosUsuario extends javax.swing.JDialog {
         setModal(true);
         initComponents();
         crearModelo();
-        LibrosCRUD p = new LibrosCRUD(MyConnection.getConnection());
-        ArrayList<Libros> rows = p.getAll();
-        volcarDatos(rows);
         this.getRootPane().setDefaultButton(btnBuscar);
         btnBuscar.setVisible(false);
     }
@@ -70,6 +67,7 @@ public class PrestamosUsuario extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -79,10 +77,12 @@ public class PrestamosUsuario extends javax.swing.JDialog {
         txtBuscar = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox();
 
+        jMenuItem1.setText("jMenuItem1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
-        jLabel1.setText("Prestamos Pendientes");
+        jLabel1.setText("Interfaz para prestamo de Libros");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -162,6 +162,10 @@ public class PrestamosUsuario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPrestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrestarActionPerformed
+        String text = txtBuscar.getText().toString();
+        ArrayList<Libros> rows = new ArrayList<>();
+        LibrosCRUD pdao =  new LibrosCRUD(MyConnection.getConnection());
+        Libros lib;
         if(jTable1.getModel().getValueAt(
             jTable1.getSelectedRow(), 2)==jTable1.getModel().getValueAt(
             jTable1.getSelectedRow(), 3)){
@@ -175,7 +179,21 @@ public class PrestamosUsuario extends javax.swing.JDialog {
                 LibrosCRUD crud = new LibrosCRUD(MyConnection.getConnection());
                 crud.updatePrestado(lb);
                 JOptionPane.showMessageDialog(this, "Prestamo registrado correctamente!!!");
-                ArrayList<Libros> rows = crud.getAll();
+                if(text.isEmpty()){
+                    rows = pdao.getAll();
+                }else{
+                    lib = new Libros("", text, "", "", 0);
+                    String option = jComboBox1.getSelectedItem().toString();
+                    switch(option){
+                        case "Por Nombre":
+                            rows = pdao.getByNombre(lib);
+                            break;
+
+                        case "Por Autor":
+                            rows = pdao.getByAutor(lib);
+                            break;
+                    }
+                }
                 volcarDatos(rows);
             }
             //volcarDatos(usuarios);
@@ -184,33 +202,26 @@ public class PrestamosUsuario extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String text = txtBuscar.getText().toString();
-        PrestamosCRUD pdao =  new PrestamosCRUD(MyConnection.getConnection());
-        ArrayList<Prestamos> rows = new ArrayList<>();
-        Prestamos p;
+        LibrosCRUD pdao =  new LibrosCRUD(MyConnection.getConnection());
+        ArrayList<Libros> rows = new ArrayList<>();
+        Libros p;
         if(text.isEmpty()){
-            rows = pdao.getPendientes();
+            rows = pdao.getAll();
         }else{
             String option = jComboBox1.getSelectedItem().toString();
             switch(option){
                 case "Por Nombre":
-                    JOptionPane.showMessageDialog(this, "Opcion no disponible en este momento");
+                    p = new Libros("", text, "", "", 0);
+                    rows = pdao.getByNombre(p);
                     break;
                     
                 case "Por Autor":
-                    String texto = JOptionPane.showInputDialog(this, "Ingrese el codigo de libro para general la consulta");
+                    p = new Libros("", "", "", text, 0);
+                    rows = pdao.getByAutor(p);
                     break;
-                
-                /*case "DNI":
-                    u = new Usuarios(null, null, text);
-                    listado = udao.getByDNI(u);
-                    break;*/
             }
         }
-        /*if(listado.isEmpty()){
-            JOptionPane.showMessageDialog(this, "No se encontraron coincidencias");
-        }else{
-            //volcarDatos(listado);
-        }*/
+        volcarDatos(rows);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
@@ -261,6 +272,7 @@ public class PrestamosUsuario extends javax.swing.JDialog {
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtBuscar;
