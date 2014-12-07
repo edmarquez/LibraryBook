@@ -203,6 +203,52 @@ public class PrestamosCRUD {
         return rows;
     }
     
+    
+    public ArrayList<Prestamos> getAllByUser(Usuarios u){
+        PreparedStatement ps;
+        ArrayList<Prestamos> rows = new ArrayList<>();
+        try {
+            ps = mycon.prepareStatement(
+                    "SELECT DISTINCT "
+                            + "Prestamos.*, Libros.nombre as lnombre, Usuarios.nombre as unombre "
+                        + "FROM "
+                            + "Prestamos, Libros, Usuarios "
+                        + "WHERE "
+                            + "Prestamos.id_usuario=? "
+                            + "AND Usuarios.codigo=Prestamos.id_usuario "
+                            + "AND Prestamos.id_libro = Libros.codigo "
+            );
+            ps.setString(1, u.getCodigo());
+            ResultSet rs = ps.executeQuery();
+            if(rs!=null){
+                try {
+                    Prestamos p;
+                    while(rs.next()){
+                        p = new Prestamos(
+                            rs.getInt("id"),
+                            rs.getDate("fecha"),
+                            rs.getString("estado"),
+                            rs.getString("id_libro"),
+                            rs.getString("id_usuario")
+                        );
+                        p.setNombreLibro(rs.getString("lnombre"));
+                        p.setNombreUsuario(rs.getString("unombre"));
+                        rows.add(p);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Prestamos.class.getName()).
+                            log(Level.SEVERE, null, ex);
+                }
+            }else{
+                System.out.println("Total de registros encontrados es: 0");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PrestamosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return rows;
+    }
+    
     public ArrayList<Prestamos> getById(Prestamos p){
         PreparedStatement ps;
         ArrayList<Prestamos> rows = new ArrayList<>();

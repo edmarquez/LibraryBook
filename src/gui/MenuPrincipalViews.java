@@ -89,6 +89,11 @@ public class MenuPrincipalViews extends javax.swing.JFrame {
         jMenu2.add(jMenuItem5);
 
         jMenuItem3.setText("Historial");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
@@ -151,6 +156,13 @@ public class MenuPrincipalViews extends javax.swing.JFrame {
         pp.setLocationRelativeTo(this);
         pp.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        HistorialPrestamosUsuario hp = new HistorialPrestamosUsuario();
+        hp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        hp.setLocationRelativeTo(this);
+        hp.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
