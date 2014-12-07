@@ -6,13 +6,11 @@
 package gui;
 import crud.LibrosCRUD;
 import crud.PrestamosCRUD;
-import crud.UsuariosCRUD;
 import db.MyConnection;
 import entity.Libros;
 import entity.Prestamos;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import entity.Usuarios;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.sql.Date;
@@ -175,7 +173,7 @@ public class PrestamosUsuario extends javax.swing.JDialog {
             Prestamos pnew =  new Prestamos(0, new Date(cal.getTimeInMillis()), "pendiente", lb.getCodigolibro(), MenuPrincipalViews.user.getCodigo());
             if(p.add(pnew)){
                 LibrosCRUD crud = new LibrosCRUD(MyConnection.getConnection());
-                crud.updatePrestados(lb);
+                crud.updatePrestado(lb);
                 JOptionPane.showMessageDialog(this, "Prestamo registrado correctamente!!!");
                 ArrayList<Libros> rows = crud.getAll();
                 volcarDatos(rows);

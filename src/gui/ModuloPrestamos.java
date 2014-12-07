@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package gui;
+import crud.LibrosCRUD;
 import crud.PrestamosCRUD;
 import crud.UsuariosCRUD;
 import db.MyConnection;
+import entity.Libros;
 import entity.Prestamos;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -160,15 +162,19 @@ public class ModuloPrestamos extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
-        Usuarios us = (Usuarios) jTable1.getModel().getValueAt(
-            jTable1.getSelectedRow(), 3
+        Prestamos us = (Prestamos) jTable1.getModel().getValueAt(
+            jTable1.getSelectedRow(), 4
         );
-        MUsuarios mu = new MUsuarios(us);
-        mu.setLocationRelativeTo(this);
-        mu.setVisible(true);
-        UsuariosCRUD lb = new UsuariosCRUD(MyConnection.getConnection());
-        ArrayList usuarios = lb.getAll();
-        //volcarDatos(usuarios);
+        PrestamosCRUD pres = new PrestamosCRUD(MyConnection.getConnection());
+        boolean state = pres.updateStateDevuelto(us);
+        LibrosCRUD lib = new LibrosCRUD(MyConnection.getConnection());
+        Libros mylib = new Libros(us.getIdLibro(), "", "", "", 0);
+        boolean restado = lib.updateDevuelto(mylib);
+        ArrayList rows = pres.getPendientes();
+        volcarDatos(rows);
+        if(state && restado){
+            JOptionPane.showMessageDialog(this, "La devolución ha sido registrada");
+        }
     }//GEN-LAST:event_btnDevolverActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed

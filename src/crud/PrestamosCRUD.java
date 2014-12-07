@@ -73,6 +73,22 @@ public class PrestamosCRUD {
         return false;
     }
     
+    public boolean updateStateDevuelto(Prestamos p){
+        PreparedStatement ps;
+        try {
+            ps = mycon.prepareStatement(
+                "UPDATE Prestamos "+ 
+                "SET estado='devuelto' "+ 
+                "WHERE id=?"
+            );
+            ps.setInt(1, p.getId());
+            return (ps.executeUpdate()>0);
+        } catch (SQLException ex) {
+            Logger.getLogger(PrestamosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     public ArrayList<Prestamos> getAll(){
         PreparedStatement ps;
         ArrayList<Prestamos> rows = new ArrayList<>();

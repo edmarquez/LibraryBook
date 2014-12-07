@@ -76,12 +76,28 @@ public class LibrosCRUD {
     }
     
     
-    public boolean updatePrestados(Libros l){
+    public boolean updatePrestado(Libros l){
         PreparedStatement ps;
         try {
             ps = mycon.prepareStatement(
                 "UPDATE Libros "+ 
                 "SET prestados=prestados+1 "+ 
+                "WHERE codigo=?"
+            );
+            ps.setString(1, l.getCodigolibro());
+            return (ps.executeUpdate()>0);
+        } catch (SQLException ex) {
+            Logger.getLogger(LibrosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public boolean updateDevuelto(Libros l){
+        PreparedStatement ps;
+        try {
+            ps = mycon.prepareStatement(
+                "UPDATE Libros "+ 
+                "SET prestados=prestados-1 "+ 
                 "WHERE codigo=?"
             );
             ps.setString(1, l.getCodigolibro());
