@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import entity.Prestamos;
+import entity.Usuarios;
 
 /**
  *
@@ -127,6 +128,51 @@ public class PrestamosCRUD {
         ArrayList<Prestamos> rows = new ArrayList<>();
         try {
             ps = mycon.prepareStatement("SELECT DISTINCT Prestamos.*, Libros.nombre as lnombre, Usuarios.nombre as unombre  FROM Prestamos, Libros, Usuarios WHERE Prestamos.id_libro = Libros.codigo AND Prestamos.id_usuario=Usuarios.codigo AND Prestamos.estado='pendiente'");
+            ResultSet rs = ps.executeQuery();
+            if(rs!=null){
+                try {
+                    Prestamos p;
+                    while(rs.next()){
+                        p = new Prestamos(
+                            rs.getInt("id"),
+                            rs.getDate("fecha"),
+                            rs.getString("estado"),
+                            rs.getString("id_libro"),
+                            rs.getString("id_usuario")
+                        );
+                        p.setNombreLibro(rs.getString("lnombre"));
+                        p.setNombreUsuario(rs.getString("unombre"));
+                        rows.add(p);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Prestamos.class.getName()).
+                            log(Level.SEVERE, null, ex);
+                }
+            }else{
+                System.out.println("Total de registros encontrados es: 0");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PrestamosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return rows;
+    }
+    
+    public ArrayList<Prestamos> getPendientesByUser(Usuarios u){
+        PreparedStatement ps;
+        ArrayList<Prestamos> rows = new ArrayList<>();
+        try {
+            ps = mycon.prepareStatement(
+                    "SELECT DISTINCT "
+                            + "Prestamos.*, Libros.nombre as lnombre, Usuarios.nombre as unombre "
+                        + "FROM "
+                            + "Prestamos, Libros, Usuarios "
+                        + "WHERE "
+                            + "Prestamos.id_usuario=? "
+                            + "AND Usuarios.codigo=Prestamos.id_usuario "
+                            + "AND Prestamos.id_libro = Libros.codigo "
+                            + "AND Prestamos.estado='pendiente' ");
+            ps.setString(1, u.getCodigo());
             ResultSet rs = ps.executeQuery();
             if(rs!=null){
                 try {

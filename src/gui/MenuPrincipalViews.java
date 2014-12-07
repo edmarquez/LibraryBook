@@ -40,8 +40,8 @@ public class MenuPrincipalViews extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         jMenuItem4.setText("jMenuItem4");
 
@@ -80,11 +80,16 @@ public class MenuPrincipalViews extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem6);
 
+        jMenuItem5.setText("Pendientes");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
+
         jMenuItem3.setText("Historial");
         jMenu2.add(jMenuItem3);
-
-        jMenuItem5.setText("Pendientes");
-        jMenu2.add(jMenuItem5);
 
         jMenuBar1.add(jMenu2);
 
@@ -139,6 +144,13 @@ public class MenuPrincipalViews extends javax.swing.JFrame {
         pu.setVisible(true);
         
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        PrestamosPendientesUsuario pp = new PrestamosPendientesUsuario();
+        pp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        pp.setLocationRelativeTo(this);
+        pp.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
