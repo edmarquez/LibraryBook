@@ -15,6 +15,7 @@ public class Libros implements Serializable {
     private String titulolibro;
     private String autorlibro;
     private int cantidad = 0;
+    private int prestados =0;
 
     public Libros() {
     }
@@ -28,6 +29,14 @@ public class Libros implements Serializable {
 
     }
 
+    public int getPrestados() {
+        return prestados;
+    }
+
+    public void setPrestados(int prestados) {
+        this.prestados = prestados;
+    }
+    
     public String getNombrelibro() {
         return nombrelibro;
     }

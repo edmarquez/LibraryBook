@@ -9,12 +9,13 @@ import db.MyConnection;
 import javax.swing.JOptionPane;
 import entity.Usuarios;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 /**
  *
  * @author allexiusw
  */
 public class MenuPrincipalViews extends javax.swing.JFrame {
-    Usuarios user;
+    public static Usuarios user;
     /**
      * Creates new form MenuPrincipalAdministrador
      */
@@ -72,6 +73,11 @@ public class MenuPrincipalViews extends javax.swing.JFrame {
         jMenu2.setEnabled(false);
 
         jMenuItem6.setText("Nuevo");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem6);
 
         jMenuItem3.setText("Historial");
@@ -112,9 +118,8 @@ public class MenuPrincipalViews extends javax.swing.JFrame {
         if(users.isEmpty()){
             JOptionPane.showMessageDialog(this, "No se encontro el usuario");
         }else{
-            this.user = users.get(0);
+            MenuPrincipalViews.user = users.get(0);
             jlUser.setText("Usuario: "+this.user.getNombre());
-            this.user = users.get(0);
             this.jMenu2.setEnabled(true);
             this.jMenuItem1.setEnabled(false);
         }
@@ -126,6 +131,14 @@ public class MenuPrincipalViews extends javax.swing.JFrame {
         this.jlUser.setText("Usuario: No identificado");
         
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        PrestamosUsuario pu = new PrestamosUsuario();
+        pu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        pu.setLocationRelativeTo(this);
+        pu.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments

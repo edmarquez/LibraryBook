@@ -28,12 +28,13 @@ public class LibrosCRUD {
     public boolean add(Libros l){
         PreparedStatement ps;
         try {
-            ps = mycon.prepareStatement("INSERT INTO Libros VALUES(?,?,?,?,?)");
+            ps = mycon.prepareStatement("INSERT INTO Libros VALUES(?,?,?,?,?,?)");
             ps.setString(1, l.getCodigolibro());
             ps.setString(2, l.getNombrelibro());
             ps.setString(3, l.getTitulolibro());
             ps.setString(4, l.getAutorlibro());
             ps.setInt(5, l.getCantidad());
+            ps.setInt(5, l.getPrestados());
             return (ps.executeUpdate()>0);
         } catch (SQLException ex) {
             Logger.getLogger(LibrosCRUD.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,14 +60,32 @@ public class LibrosCRUD {
         try {
             ps = mycon.prepareStatement(
                 "UPDATE Libros "+ 
-                "SET nombre=?, titulo=?, autor=?, cantidad=? "+ 
+                "SET nombre=?, titulo=?, autor=?, cantidad=?,  prestados=? "+ 
                 "WHERE codigo=?"
             );
             ps.setString(1, l.getNombrelibro());
             ps.setString(2, l.getTitulolibro());
             ps.setString(3, l.getAutorlibro());
             ps.setInt(4, l.getCantidad());
-            ps.setString(5, l.getCodigolibro());
+             ps.setInt(5, l.getPrestados());
+            ps.setString(6, l.getCodigolibro());
+            return (ps.executeUpdate()>0);
+        } catch (SQLException ex) {
+            Logger.getLogger(LibrosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    
+    public boolean updatePrestados(Libros l){
+        PreparedStatement ps;
+        try {
+            ps = mycon.prepareStatement(
+                "UPDATE Libros "+ 
+                "SET prestados=prestados+1 "+ 
+                "WHERE codigo=?"
+            );
+            ps.setString(1, l.getCodigolibro());
             return (ps.executeUpdate()>0);
         } catch (SQLException ex) {
             Logger.getLogger(LibrosCRUD.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,15 +102,15 @@ public class LibrosCRUD {
             if(rs!=null){
                 try {
                     while(rs.next()){
-                        libros.add(
-                            new Libros(
+                        Libros l = new Libros(
                                 rs.getString("codigo"), 
                                 rs.getString("nombre"),
                                 rs.getString("titulo"),
                                 rs.getString("autor"),
                                 rs.getInt("cantidad")
-                            )
-                        );
+                            );
+                        l.setPrestados(rs.getInt("prestados"));
+                        libros.add(l);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(Libros.class.getName()).
@@ -117,15 +136,15 @@ public class LibrosCRUD {
             if(rs!=null){
                 try {
                     while(rs.next()){
-                        libros.add(
-                            new Libros(
+                        Libros l1 = new Libros(
                                 rs.getString("codigo"), 
                                 rs.getString("nombre"),
                                 rs.getString("titulo"),
                                 rs.getString("autor"),
                                 rs.getInt("cantidad")
-                            )
                         );
+                        l1.setPrestados(rs.getInt("prestados"));
+                        libros.add(l1);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(Libros.class.getName()).
@@ -151,15 +170,15 @@ public class LibrosCRUD {
             if(rs!=null){
                 try {
                     while(rs.next()){
-                        libros.add(
-                            new Libros(
+                        Libros l1 = new Libros(
                                 rs.getString("codigo"), 
                                 rs.getString("nombre"),
                                 rs.getString("titulo"),
                                 rs.getString("autor"),
                                 rs.getInt("cantidad")
-                            )
                         );
+                        l1.setPrestados(rs.getInt("prestados"));
+                        libros.add(l1);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(Libros.class.getName()).
@@ -186,15 +205,15 @@ public class LibrosCRUD {
             if(rs!=null){
                 try {
                     while(rs.next()){
-                        libros.add(
-                            new Libros(
+                        Libros l1 = new Libros(
                                 rs.getString("codigo"), 
                                 rs.getString("nombre"),
                                 rs.getString("titulo"),
                                 rs.getString("autor"),
                                 rs.getInt("cantidad")
-                            )
                         );
+                        l1.setPrestados(rs.getInt("prestados"));
+                        libros.add(l1);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(Libros.class.getName()).
@@ -220,15 +239,15 @@ public class LibrosCRUD {
             if(rs!=null){
                 try {
                     while(rs.next()){
-                        libros.add(
-                            new Libros(
+                        Libros l1 = new Libros(
                                 rs.getString("codigo"), 
                                 rs.getString("nombre"),
                                 rs.getString("titulo"),
                                 rs.getString("autor"),
                                 rs.getInt("cantidad")
-                            )
                         );
+                        l1.setPrestados(rs.getInt("prestados"));
+                        libros.add(l1);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(Libros.class.getName()).

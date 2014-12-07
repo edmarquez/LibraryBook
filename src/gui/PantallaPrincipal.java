@@ -95,6 +95,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         MenuPrincipalViews mv = new MenuPrincipalViews();
         mv.setLocationRelativeTo(null);
         mv.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mv.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mv.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
