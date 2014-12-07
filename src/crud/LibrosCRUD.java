@@ -60,15 +60,14 @@ public class LibrosCRUD {
         try {
             ps = mycon.prepareStatement(
                 "UPDATE Libros "+ 
-                "SET nombre=?, titulo=?, autor=?, cantidad=?,  prestados=? "+ 
+                "SET nombre=?, titulo=?, autor=?, cantidad=? "+ 
                 "WHERE codigo=?"
             );
             ps.setString(1, l.getNombrelibro());
             ps.setString(2, l.getTitulolibro());
             ps.setString(3, l.getAutorlibro());
             ps.setInt(4, l.getCantidad());
-             ps.setInt(5, l.getPrestados());
-            ps.setString(6, l.getCodigolibro());
+            ps.setString(5, l.getCodigolibro());
             return (ps.executeUpdate()>0);
         } catch (SQLException ex) {
             Logger.getLogger(LibrosCRUD.class.getName()).log(Level.SEVERE, null, ex);

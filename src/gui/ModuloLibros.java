@@ -12,7 +12,6 @@ import entity.Libros;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import java.awt.event.KeyEvent;
 /**
  *
  * @author allexiusw
@@ -38,7 +37,7 @@ public class ModuloLibros extends javax.swing.JDialog {
         jTable1.setModel(
             new DefaultTableModel(
                 new Object[][]{},
-                new String[]{"Codigo","Nombre", "Titulo", "Autor", "Cantidad", "Object"}
+                new String[]{"Codigo","Nombre", "Titulo", "Autor", "Cantidad", "Prestados", "Object"}
             )
         );
         jScrollPane1.setViewportView(jTable1);
@@ -55,6 +54,7 @@ public class ModuloLibros extends javax.swing.JDialog {
                 l.getTitulolibro(),
                 l.getAutorlibro(),
                 l.getCantidad(),
+                l.getPrestados(),
                 l
             };
             model.addRow(fila);
@@ -208,7 +208,7 @@ public class ModuloLibros extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         Libros li = (Libros) jTable1.getModel().getValueAt(
-            jTable1.getSelectedRow(), 5
+            jTable1.getSelectedRow(), 6
         );
         MLibros ml = new MLibros(li);
         ml.setLocationRelativeTo(this);
