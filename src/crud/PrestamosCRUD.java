@@ -204,6 +204,33 @@ public class PrestamosCRUD {
     }
     
     
+    public int getNumeroDePrestamos(Usuarios u){
+        int numero = 0;
+        PreparedStatement ps;
+        try {
+            ps = mycon.prepareStatement(
+                    "SELECT "
+                            + "COUNT(Usuarios.nombre) as total "
+                        + "FROM "
+                            + "Prestamos, Libros, Usuarios "
+                        + "WHERE "
+                            + "Prestamos.id_usuario=? "
+                            + "AND Usuarios.codigo=Prestamos.id_usuario "
+                            + "AND Prestamos.id_libro = Libros.codigo "
+                            + "AND Prestamos.estado='pendiente' ");
+            ps.setString(1, u.getCodigo());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                numero = rs.getInt("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PrestamosCRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return numero;
+    }
+    
+    
     public ArrayList<Prestamos> getAllByUser(Usuarios u){
         PreparedStatement ps;
         ArrayList<Prestamos> rows = new ArrayList<>();

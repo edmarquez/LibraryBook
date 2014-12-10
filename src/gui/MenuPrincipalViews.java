@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package gui;
+import crud.PrestamosCRUD;
 import crud.UsuariosCRUD;
 import db.MyConnection;
 import javax.swing.JOptionPane;
@@ -16,6 +17,7 @@ import javax.swing.JFrame;
  */
 public class MenuPrincipalViews extends javax.swing.JFrame {
     public static Usuarios user;
+    public static int prestamos;
     /**
      * Creates new form MenuPrincipalAdministrador
      */
@@ -124,11 +126,16 @@ public class MenuPrincipalViews extends javax.swing.JFrame {
         String tmpcod = JOptionPane.showInputDialog(this, "Introdusca su codigo", "Captura de codigo", JOptionPane.QUESTION_MESSAGE);
         Usuarios us = new Usuarios(tmpcod, null, null);
         UsuariosCRUD userc = new UsuariosCRUD(MyConnection.getConnection());
+        PrestamosCRUD p = new PrestamosCRUD(MyConnection.getConnection());
         ArrayList<Usuarios> users = userc.isValid(us);
         if(users.isEmpty()){
             JOptionPane.showMessageDialog(this, "No se encontro el usuario");
         }else{
             MenuPrincipalViews.user = users.get(0);
+            MenuPrincipalViews.prestamos = p.getNumeroDePrestamos(MenuPrincipalViews.user);
+            if(MenuPrincipalViews.prestamos>1){
+                jMenuItem6.setEnabled(false);
+            }
             jlUser.setText("Usuario: "+this.user.getNombre());
             this.jMenu2.setEnabled(true);
             this.jMenuItem1.setEnabled(false);
