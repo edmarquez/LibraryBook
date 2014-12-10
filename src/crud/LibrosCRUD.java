@@ -34,7 +34,7 @@ public class LibrosCRUD {
             ps.setString(3, l.getTitulolibro());
             ps.setString(4, l.getAutorlibro());
             ps.setInt(5, l.getCantidad());
-            ps.setInt(5, l.getPrestados());
+            ps.setInt(6, l.getPrestados());
             return (ps.executeUpdate()>0);
         } catch (SQLException ex) {
             Logger.getLogger(LibrosCRUD.class.getName()).log(Level.SEVERE, null, ex);

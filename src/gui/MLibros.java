@@ -189,14 +189,23 @@ public class MLibros extends javax.swing.JDialog {
                 edtAutor.getText().toString(),
                 Integer.parseInt(edtCantidad.getText().toString())
             );
-            if(newl.add(l)){
+            if(!newl.getById(l).isEmpty()){
                 JOptionPane.showMessageDialog(
                     this,
-                    "Registro Guardado Con exito!!!",
+                    "El codigo es repetido",
                     "Notificación",
                     JOptionPane.INFORMATION_MESSAGE
                 );
-                clearForm();
+            }else{
+                if(newl.add(l)){
+                    JOptionPane.showMessageDialog(
+                        this,
+                        "Registro Guardado Con exito!!!",
+                        "Notificación",
+                        JOptionPane.INFORMATION_MESSAGE
+                    );
+                    clearForm();
+                }
             }
         }
     }//GEN-LAST:event_btnSwitchActionPerformed
